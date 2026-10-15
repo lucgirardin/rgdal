@@ -13,6 +13,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <Rdefines.h>
+#undef length
 #include "rgdal.h"
 
 #ifdef __cplusplus
@@ -421,7 +422,12 @@ SEXP ogrP4S(SEXP ogrsourcename, SEXP Layer, SEXP morphFromESRI, SEXP dumpSRS) {
     }
 
     installErrorHandler();
-    hSRS = poLayer->GetSpatialRef();
+    const OGRSpatialReference *srsConst = poLayer->GetSpatialRef();
+    if (srsConst != NULL) {
+        hSRS = srsConst->Clone();
+    } else {
+        hSRS = NULL;
+    }
     uninstallErrorHandlerAndTriggerError();
 
 #if GDAL_VERSION_MAJOR >= 3
@@ -509,6 +515,9 @@ SEXP ogrP4S(SEXP ogrsourcename, SEXP Layer, SEXP morphFromESRI, SEXP dumpSRS) {
     }
 
 
+    if (hSRS != NULL) {
+        delete hSRS;
+    }
     installErrorHandler();
     delete poDS;
     uninstallErrorHandlerAndTriggerError();

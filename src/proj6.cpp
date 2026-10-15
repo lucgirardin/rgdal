@@ -1,8 +1,13 @@
 /* Copyright (c) 2019-20 Roger Bivand */
 
+#include <cpl_string.h>
+#include <cpl_csv.h>
+#include <cpl_error.h>
+#include <cpl_conv.h>
 
 #include <R.h>
 #include <Rdefines.h>
+#undef length
 #include "rgdal.h"
 //#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H // kludge for 6 only
 #ifdef PROJ_H_API // PROJ_H_API
@@ -216,7 +221,7 @@ SEXP get_proj_user_writable_dir(void) {
 SEXP set_proj_paths(SEXP paths) {
     //PJ_CONTEXT *ctx = proj_context_create();
     SEXP res;
-    int i, n = length(paths);
+    int i, n = Rf_length(paths);
     char **paths_loc = (char **) R_alloc((size_t) n, sizeof(char*));
     for (i=0; i<n; i++) paths_loc[i] = (char *) CHAR(STRING_ELT(paths, i));
 //    const char *paths = CHAR(STRING_ELT(path, 0));

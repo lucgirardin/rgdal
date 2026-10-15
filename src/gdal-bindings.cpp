@@ -1015,7 +1015,7 @@ RGDAL_GetProjectionRef(SEXP sDataset, SEXP enforce_xy) {
 SEXP
 RGDAL_GetMetadata(SEXP sDataset, SEXP tag) {
 
-    char **papszMetadata;
+    const char *const *papszMetadata;
     SEXP ans;
     int i, n, pc=0;
 

@@ -7,6 +7,7 @@
 
 #include <R.h>
 #include <Rdefines.h>
+#undef length
 /*#include <Rinternals.h>*/
 #include "rgdal.h"
 

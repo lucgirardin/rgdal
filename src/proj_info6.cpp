@@ -3,6 +3,7 @@
 
 #include <R.h>
 #include <Rdefines.h>
+#undef length
 #include "rgdal.h"
 #ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H // kludge for 6 only
 #ifndef PROJ_H_API
